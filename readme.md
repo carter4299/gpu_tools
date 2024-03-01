@@ -1,22 +1,33 @@
-# **NOT FUNCTIONCAL**
+# GPU Tools for Go [Development]
+## Overview
 
-## Needed
-- Dynamic sizing 
-```C
-#define SHARED_SIZE_LIMIT 1024U
-#define SAMPLE_STRIDE 128
-static uint *d_RanksA, *d_RanksB, *d_LimitsA, *d_LimitsB;
-static const uint MAX_SAMPLE_COUNT = 32768;
+This package is meant for Linux servers with Nvidia GPUs.\
+It provides lighweight GPU algorithms for CPU intensive tasks at scale.
+- Sorting ([]int, []int32, []int64, []float32, []float64)
+- Sum ([]int, []int32, []int64, []float32, []float64)
+- Min ([]int, []int32, []int64, []float32, []float64)
+- Max ([]int, []int32, []int64, []float32, []float64)
+- Avg ([]int, []int32, []int64, []float32, []float64)
+- Filter, ([]int, []int32, []int64, []float32, []float64)(less than, greater than, eq, less eq than , greater eq than)
 
 
-assert(N <= (SAMPLE_STRIDE * MAX_SAMPLE_COUNT));
-assert(N % SHARED_SIZE_LIMIT == 0);
-```
+### Fully Functional
+
 ```go
-//only sizing 1048576 * x works
-N := 4 * 1048576
-nums := generateUInts(N)
+type GPU struct
+
+GpuInfo() (GPU, error)
+PrintGPUInfo(GPU)
 ```
 
-- type for int64(C.ulong), float32(C.float), float64(C.double)
+### Halfway Functional
 
+```go
+MergeSort(GPU, slice) //slice can be []int, []int32, []int64, []float32, []float64
+RadixSort(GPU, slice) //slice can be []int, []int32, []int64, []float32, []float64
+```
+
+reduction, 
+scan, 
+filtering, 
+and map-reduce patterns.
